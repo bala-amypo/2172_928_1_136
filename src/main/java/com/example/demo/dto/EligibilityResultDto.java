@@ -13,7 +13,28 @@ public class EligibilityResultDto {
     private String rejectionReason;
     private LocalDateTime calculatedAt;
 
-    public EligibilityResultDto() {}
+    public EligibilityResultDto() {
+    }
+
+    public EligibilityResultDto(
+            Long id,
+            Long loanRequestId,
+            Boolean isEligible,
+            Double maxEligibleAmount,
+            Double estimatedEmi,
+            String riskLevel,
+            String rejectionReason,
+            LocalDateTime calculatedAt
+    ) {
+        this.id = id;
+        this.loanRequestId = loanRequestId;
+        this.isEligible = isEligible;
+        this.maxEligibleAmount = maxEligibleAmount;
+        this.estimatedEmi = estimatedEmi;
+        this.riskLevel = riskLevel;
+        this.rejectionReason = rejectionReason;
+        this.calculatedAt = calculatedAt;
+    }
 
     public Long getId() {
         return id;
@@ -46,26 +67,4 @@ public class EligibilityResultDto {
     public LocalDateTime getCalculatedAt() {
         return calculatedAt;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setLoanRequestId(Long loanRequestId) {
-        this.loanRequestId = loanRequestId;
-    }
-
-    public void setIsEligible(Boolean isEligible) {
-        this.isEligible = isEligible;
-    }
-
-    public void setMaxEligibleAmount(Double maxEligibleAmount) {
-        this.maxEligibleAmount = maxEligibleAmount;
-    }
-
-    public void setEstimatedEmi(Double estimatedEmi) {
-        this.estimatedEmi = estimatedEmi;
-    }
-
-    public void setRiskLevel(String riskLevel) {
-        t
+}

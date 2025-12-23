@@ -12,7 +12,11 @@ public class LoanRequest {
 
     private Double amount;
     private Integer tenure;
-    private LocalDateTime createdAt = LocalDateTime.now();
 
-    // getters & setters
+    private LocalDateTime requestedAt = LocalDateTime.now();
+
+    @ManyToOne
+    private User user;
+
+    // Getters and Setters
 }

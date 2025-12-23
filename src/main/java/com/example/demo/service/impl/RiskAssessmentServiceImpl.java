@@ -29,7 +29,7 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService {
     @Override
     public RiskAssessmentLog assessRisk(Long loanRequestId) {
 
-        if (!riskRepository.findByLoanRequestId(loanRequestId).isEmpty()) {
+        if (riskRepository.findByLoanRequestId(loanRequestId).isPresent()) {
             throw new BadRequestException("Risk already assessed");
         }
 
@@ -39,24 +39,26 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService {
         FinancialProfile profile = profileRepository.findByUserId(request.getUser().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Financial profile not found"));
 
-        double obligations = profile.getMonthlyExpenses() +
-                (profile.getExistingLoanEmi() == null ? 0 : profile.getExistingLoanEmi());
+        double existingEmi = profile.getExistingLoanEmi() != null
+                ? profile.getExistingLoanEmi()
+                : 0.0;
 
-        double dti = obligations / profile.getMonthlyIncome();
+        double totalObligations = profile.getMonthlyExpenses() + existingEmi;
+
+        double dti = totalObligations / profile.getMonthlyIncome();
 
         RiskAssessmentLog log = new RiskAssessmentLog();
         log.setLoanRequestId(loanRequestId);
         log.setDtiRatio(dti);
-        log.setCreditCheckStatus(dti < 0.5 ? "APPROVED" : "REJECTED");
+
+        if (dti < 0.4) {
+            log.setCreditCheckStatus("APPROVED");
+        } else if (dti < 0.6) {
+            log.setCreditCheckStatus("PENDING_REVIEW");
+        } else {
+            log.setCreditCheckStatus("REJECTED");
+        }
 
         return riskRepository.save(log);
-    }
-
-    @Override
-    public RiskAssessmentLog getByLoanRequestId(Long loanRequestId) {
-        return riskRepository.findByLoanRequestId(loanRequestId)
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Risk assessment not found"));
     }
 }

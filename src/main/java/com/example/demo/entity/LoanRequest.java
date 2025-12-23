@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class LoanRequest {
@@ -10,13 +9,18 @@ public class LoanRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double amount;
-    private Integer tenure;
-
-    private LocalDateTime requestedAt = LocalDateTime.now();
-
     @ManyToOne
     private User user;
 
-    // Getters and Setters
+    private double requestedAmount;
+    private int tenureMonths;
+    private String status;
+
+    // ✅ getters & setters
+    public User getUser() { return user; }
+    public double getRequestedAmount() { return requestedAmount; }
+    public int getTenureMonths() { return tenureMonths; }
+
+    public void setUser(User user) { this.user = user; }
+    public void setStatus(String status) { this.status = status; }
 }

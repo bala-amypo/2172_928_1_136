@@ -27,7 +27,7 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService {
     }
 
     @Override
-    public EligibilityResult evaluateEligibility(Long loanRequestId) {
+    public EligibilityResult checkEligibility(Long loanRequestId) {
 
         if (resultRepository.findByLoanRequestId(loanRequestId).isPresent()) {
             throw new BadRequestException("Eligibility already evaluated");
@@ -39,10 +39,12 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService {
         FinancialProfile profile = profileRepository.findByUserId(request.getUser().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Financial profile not found"));
 
-        double obligations = profile.getMonthlyExpenses() +
-                (profile.getExistingLoanEmi() == null ? 0 : profile.getExistingLoanEmi());
+        double existingEmi = profile.getExistingLoanEmi() != null
+                ? profile.getExistingLoanEmi()
+                : 0.0;
 
-        double dti = obligations / profile.getMonthlyIncome();
+        double dti = (profile.getMonthlyExpenses() + existingEmi)
+                / profile.getMonthlyIncome();
 
         EligibilityResult result = new EligibilityResult();
         result.setLoanRequest(request);
@@ -50,22 +52,19 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService {
         if (profile.getCreditScore() < 600 || dti > 0.6) {
             result.setIsEligible(false);
             result.setRiskLevel("HIGH");
-            result.setRejectionReason("High risk");
-            result.setMaxEligibleAmount(0.0);
-            result.setEstimatedEmi(0.0);
+            result.setRejectionReason("High DTI or low credit score");
+            result.setMaxEligibleAmount(0);
+            result.setEstimatedEmi(0);
         } else {
+            double maxAmount = profile.getMonthlyIncome() * 10;
+            double emi = maxAmount / request.getTenureMonths();
+
             result.setIsEligible(true);
             result.setRiskLevel(dti < 0.3 ? "LOW" : "MEDIUM");
-            result.setMaxEligibleAmount(request.getRequestedAmount());
-            result.setEstimatedEmi(request.getRequestedAmount() / request.getTenureMonths());
+            result.setMaxEligibleAmount(maxAmount);
+            result.setEstimatedEmi(emi);
         }
 
         return resultRepository.save(result);
-    }
-
-    @Override
-    public EligibilityResult getByLoanRequestId(Long loanRequestId) {
-        return resultRepository.findByLoanRequestId(loanRequestId)
-                .orElseThrow(() -> new ResourceNotFoundException("Eligibility result not found"));
     }
 }

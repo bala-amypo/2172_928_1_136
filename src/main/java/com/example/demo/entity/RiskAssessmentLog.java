@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class RiskAssessmentLog {
@@ -10,9 +9,39 @@ public class RiskAssessmentLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String riskLevel;
+    private Long loanRequestId;
 
-    private LocalDateTime assessedAt = LocalDateTime.now();
+    private double dtiRatio;
 
-    // Getters and Setters
+    private String creditCheckStatus;
+
+    // getters
+    public Long getId() {
+        return id;
+    }
+
+    public Long getLoanRequestId() {
+        return loanRequestId;
+    }
+
+    public double getDtiRatio() {
+        return dtiRatio;
+    }
+
+    public String getCreditCheckStatus() {
+        return creditCheckStatus;
+    }
+
+    // setters (FIX)
+    public void setLoanRequestId(Long loanRequestId) {
+        this.loanRequestId = loanRequestId;
+    }
+
+    public void setDtiRatio(double dtiRatio) {
+        this.dtiRatio = dtiRatio;
+    }
+
+    public void setCreditCheckStatus(String creditCheckStatus) {
+        this.creditCheckStatus = creditCheckStatus;
+    }
 }

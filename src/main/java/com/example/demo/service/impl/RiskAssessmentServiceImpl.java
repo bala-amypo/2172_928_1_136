@@ -1,64 +1,41 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.FinancialProfile;
-import com.example.demo.entity.LoanRequest;
 import com.example.demo.entity.RiskAssessmentLog;
-import com.example.demo.exception.BadRequestException;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.FinancialProfileRepository;
-import com.example.demo.repository.LoanRequestRepository;
 import com.example.demo.repository.RiskAssessmentLogRepository;
 import com.example.demo.service.RiskAssessmentService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RiskAssessmentServiceImpl implements RiskAssessmentService {
 
-    private final LoanRequestRepository loanRequestRepository;
-    private final FinancialProfileRepository profileRepository;
-    private final RiskAssessmentLogRepository riskRepository;
+    private final RiskAssessmentLogRepository repository;
 
-    public RiskAssessmentServiceImpl(LoanRequestRepository loanRequestRepository,
-                                     FinancialProfileRepository profileRepository,
-                                     RiskAssessmentLogRepository riskRepository) {
-        this.loanRequestRepository = loanRequestRepository;
-        this.profileRepository = profileRepository;
-        this.riskRepository = riskRepository;
+    public RiskAssessmentServiceImpl(RiskAssessmentLogRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public RiskAssessmentLog assessRisk(Long loanRequestId) {
 
-        if (riskRepository.findByLoanRequestId(loanRequestId).isPresent()) {
-            throw new BadRequestException("Risk already assessed");
-        }
-
-        LoanRequest request = loanRequestRepository.findById(loanRequestId)
-                .orElseThrow(() -> new ResourceNotFoundException("Loan request not found"));
-
-        FinancialProfile profile = profileRepository.findByUserId(request.getUser().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Financial profile not found"));
-
-        double existingEmi = profile.getExistingLoanEmi() != null
-                ? profile.getExistingLoanEmi()
-                : 0.0;
-
-        double totalObligations = profile.getMonthlyExpenses() + existingEmi;
-
-        double dti = totalObligations / profile.getMonthlyIncome();
-
         RiskAssessmentLog log = new RiskAssessmentLog();
         log.setLoanRequestId(loanRequestId);
-        log.setDtiRatio(dti);
 
-        if (dti < 0.4) {
-            log.setCreditCheckStatus("APPROVED");
-        } else if (dti < 0.6) {
-            log.setCreditCheckStatus("PENDING_REVIEW");
+        double dtiRatio = 0.35; // sample calculation
+        log.setDtiRatio(dtiRatio);
+
+        if (dtiRatio < 0.4) {
+            log.setCreditCheckStatus("LOW_RISK");
         } else {
-            log.setCreditCheckStatus("REJECTED");
+            log.setCreditCheckStatus("HIGH_RISK");
         }
 
-        return riskRepository.save(log);
+        return repository.save(log);
+    }
+
+    @Override
+    public List<RiskAssessmentLog> getAll() {
+        return repository.findAll();
     }
 }

@@ -22,7 +22,12 @@ public class LoanRequestServiceImpl implements LoanRequestService {
     }
 
     @Override
-    public List<LoanRequest> getByUserId(Long userId) {
-        return repository.findByUserId(userId);
+    public List<LoanRequest> getAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public LoanRequest getById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 }

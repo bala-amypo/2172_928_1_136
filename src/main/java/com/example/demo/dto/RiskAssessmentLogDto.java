@@ -10,42 +10,43 @@ public class RiskAssessmentLogDto {
     private String creditCheckStatus;
     private LocalDateTime timestamp;
 
-    public RiskAssessmentLogDto() {}
+    public RiskAssessmentLogDto() {
+    }
 
     public Long getId() {
         return id;
-    }
-
-    public Long getLoanRequestId() {
-        return loanRequestId;
-    }
-
-    public Double getDtiRatio() {
-        return dtiRatio;
-    }
-
-    public String getCreditCheckStatus() {
-        return creditCheckStatus;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public Long getLoanRequestId() {
+        return loanRequestId;
+    }
+
     public void setLoanRequestId(Long loanRequestId) {
         this.loanRequestId = loanRequestId;
+    }
+
+    public Double getDtiRatio() {
+        return dtiRatio;
     }
 
     public void setDtiRatio(Double dtiRatio) {
         this.dtiRatio = dtiRatio;
     }
 
+    public String getCreditCheckStatus() {
+        return creditCheckStatus;
+    }
+
     public void setCreditCheckStatus(String creditCheckStatus) {
         this.creditCheckStatus = creditCheckStatus;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
     public void setTimestamp(LocalDateTime timestamp) {

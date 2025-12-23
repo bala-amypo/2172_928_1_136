@@ -1,10 +1,26 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.entity.FinancialProfile;
+import com.example.demo.repository.FinancialProfileRepository;
+import com.example.demo.service.FinancialProfileService;
+import org.springframework.stereotype.Service;
 
-public interface FinancialProfileService {
+@Service
+public class FinancialProfileServiceImpl implements FinancialProfileService {
 
-    FinancialProfile create(FinancialProfile profile);
+    private final FinancialProfileRepository profileRepository;
 
-    FinancialProfile getById(Long id);
+    public FinancialProfileServiceImpl(FinancialProfileRepository profileRepository) {
+        this.profileRepository = profileRepository;
+    }
+
+    @Override
+    public FinancialProfile create(FinancialProfile profile) {
+        return profileRepository.save(profile);
+    }
+
+    @Override
+    public FinancialProfile getById(Long id) {
+        return profileRepository.findById(id).orElse(null);
+    }
 }

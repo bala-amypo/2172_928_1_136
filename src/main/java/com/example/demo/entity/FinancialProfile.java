@@ -1,17 +1,18 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
 public class FinancialProfile {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private User user;
-
-    private Double monthlyIncome;
-    private Double monthlyExpenses;
-    private Double existingLoanEmi;
+    private Double income;
     private Integer creditScore;
-    private Double savingsBalance;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    private LocalDateTime lastUpdatedAt = LocalDateTime.now();
+    // getters & setters
 }

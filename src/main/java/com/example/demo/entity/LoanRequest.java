@@ -1,16 +1,18 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
 public class LoanRequest {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User user;
+    private Double amount;
+    private Integer tenure;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    private Double requestedAmount;
-    private Integer tenureMonths;
-    private String purpose;
-    private String status = "PENDING";
-
-    private LocalDateTime appliedAt = LocalDateTime.now();
+    // getters & setters
 }

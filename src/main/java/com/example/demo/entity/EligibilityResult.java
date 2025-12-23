@@ -1,18 +1,18 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
 public class EligibilityResult {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private LoanRequest loanRequest;
+    private Boolean eligible;
+    private String reason;
+    private LocalDateTime checkedAt = LocalDateTime.now();
 
-    private Boolean isEligible;
-    private Double maxEligibleAmount;
-    private Double estimatedEmi;
-    private String riskLevel;
-    private String rejectionReason;
-
-    private LocalDateTime calculatedAt = LocalDateTime.now();
+    // getters & setters
 }
-

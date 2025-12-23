@@ -2,29 +2,27 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.FinancialProfile;
 import com.example.demo.service.FinancialProfileService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/financial-profiles")
-@Tag(name = "FinancialProfile")
+@RequestMapping("/financial-profiles")
 public class FinancialProfileController {
 
-    private final FinancialProfileService profileService;
+    private final FinancialProfileService service;
 
-    public FinancialProfileController(FinancialProfileService profileService) {
-        this.profileService = profileService;
+    public FinancialProfileController(FinancialProfileService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<?> createOrUpdate(
+    public ResponseEntity<FinancialProfile> create(
             @RequestBody FinancialProfile profile) {
-        return ResponseEntity.ok(profileService.createOrUpdate(profile));
+        return ResponseEntity.ok(service.create(profile));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(profileService.getByUserId(userId));
+    @GetMapping("/{id}")
+    public ResponseEntity<FinancialProfile> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getById(id));
     }
 }

@@ -2,39 +2,34 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.LoanRequest;
 import com.example.demo.service.LoanRequestService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/loan-requests")
-@Tag(name = "LoanRequest")
+@RequestMapping("/loan-requests")
 public class LoanRequestController {
 
-    private final LoanRequestService loanRequestService;
+    private final LoanRequestService service;
 
-    public LoanRequestController(LoanRequestService loanRequestService) {
-        this.loanRequestService = loanRequestService;
+    public LoanRequestController(LoanRequestService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<?> submit(@RequestBody LoanRequest request) {
-        return ResponseEntity.ok(loanRequestService.submitRequest(request));
-    }
-
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(
-                loanRequestService.getRequestsByUser(userId));
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(loanRequestService.getById(id));
+    public ResponseEntity<LoanRequest> create(
+            @RequestBody LoanRequest request) {
+        return ResponseEntity.ok(service.create(request));
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(loanRequestService.getAllRequests());
+    public ResponseEntity<List<LoanRequest>> getAll() {
+        return ResponseEntity.ok(service.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LoanRequest> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getById(id));
     }
 }

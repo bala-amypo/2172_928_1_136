@@ -10,8 +10,9 @@ public class RiskAssessmentLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String decision;
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private String riskLevel;
 
-    // getters & setters
+    private LocalDateTime assessedAt = LocalDateTime.now();
+
+    // Getters and Setters
 }

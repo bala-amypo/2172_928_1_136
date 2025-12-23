@@ -12,7 +12,11 @@ public class EligibilityResult {
 
     private Boolean eligible;
     private String reason;
+
     private LocalDateTime checkedAt = LocalDateTime.now();
 
-    // getters & setters
+    @OneToOne
+    private LoanRequest loanRequest;
+
+    // Getters and Setters
 }

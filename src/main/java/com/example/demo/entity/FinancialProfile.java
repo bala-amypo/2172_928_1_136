@@ -12,7 +12,11 @@ public class FinancialProfile {
 
     private Double income;
     private Integer creditScore;
-    private LocalDateTime createdAt = LocalDateTime.now();
 
-    // getters & setters
+    private LocalDateTime updatedAt = LocalDateTime.now();
+
+    @OneToOne
+    private User user;
+
+    // Getters and Setters
 }

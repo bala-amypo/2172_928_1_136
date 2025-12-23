@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.EligibilityResult;
+
 public interface LoanEligibilityService {
 
-    Object checkEligibility(Long loanRequestId);
+    EligibilityResult checkEligibility(Long loanRequestId);
 }

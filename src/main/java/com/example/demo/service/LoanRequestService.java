@@ -5,10 +5,7 @@ import com.example.demo.entity.LoanRequest;
 import java.util.List;
 
 public interface LoanRequestService {
-
-    LoanRequest create(LoanRequest request);
-
-    List<LoanRequest> getAll();
-
+    LoanRequest submitRequest(LoanRequest request);
     LoanRequest getById(Long id);
+    List<LoanRequest> getRequestsByUser(Long userId);
 }

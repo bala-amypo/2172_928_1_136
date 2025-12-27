@@ -14,70 +14,18 @@ public class EligibilityResult {
     @JoinColumn(name = "loan_request_id")
     private LoanRequest loanRequest;
 
-    @Column(name = "is_eligible")
-    private boolean isEligible;
+    private Double maxEligibleAmount;
 
-    private String riskLevel;
+    // getters and setters
+    public Long getId() { return id; }
 
-    private String rejectionReason;
+    public void setId(Long id) { this.id = id; }
 
-    private double maxEligibleAmount;
+    public LoanRequest getLoanRequest() { return loanRequest; }
 
-    private double estimatedEmi;
+    public void setLoanRequest(LoanRequest loanRequest) { this.loanRequest = loanRequest; }
 
-    // ===== GETTERS =====
+    public Double getMaxEligibleAmount() { return maxEligibleAmount; }
 
-    public Long getId() {
-        return id;
-    }
-
-    public LoanRequest getLoanRequest() {
-        return loanRequest;
-    }
-
-    public boolean isEligible() {
-        return isEligible;
-    }
-
-    public String getRiskLevel() {
-        return riskLevel;
-    }
-
-    public String getRejectionReason() {
-        return rejectionReason;
-    }
-
-    public double getMaxEligibleAmount() {
-        return maxEligibleAmount;
-    }
-
-    public double getEstimatedEmi() {
-        return estimatedEmi;
-    }
-
-    // ===== SETTERS (CRITICAL FIX) =====
-
-    public void setLoanRequest(LoanRequest loanRequest) {
-        this.loanRequest = loanRequest;
-    }
-
-    public void setIsEligible(boolean eligible) {
-        this.isEligible = eligible;
-    }
-
-    public void setRiskLevel(String riskLevel) {
-        this.riskLevel = riskLevel;
-    }
-
-    public void setRejectionReason(String rejectionReason) {
-        this.rejectionReason = rejectionReason;
-    }
-
-    public void setMaxEligibleAmount(double maxEligibleAmount) {
-        this.maxEligibleAmount = maxEligibleAmount;
-    }
-
-    public void setEstimatedEmi(double estimatedEmi) {
-        this.estimatedEmi = estimatedEmi;
-    }
+    public void setMaxEligibleAmount(Double maxEligibleAmount) { this.maxEligibleAmount = maxEligibleAmount; }
 }

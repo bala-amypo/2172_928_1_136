@@ -3,45 +3,34 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class RiskAssessmentLog {
+@Table(name = "risk_assessments")
+public class RiskAssessment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long loanRequestId;
+    @OneToOne
+    @JoinColumn(name = "loan_request_id")
+    private LoanRequest loanRequest;
 
-    private double dtiRatio;
+    private Double riskScore;
+    private Double dtiRatio;
 
-    private String creditCheckStatus;
+    // getters and setters
+    public Long getId() { return id; }
 
-    // getters
-    public Long getId() {
-        return id;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getLoanRequestId() {
-        return loanRequestId;
-    }
+    public LoanRequest getLoanRequest() { return loanRequest; }
 
-    public double getDtiRatio() {
-        return dtiRatio;
-    }
+    public void setLoanRequest(LoanRequest loanRequest) { this.loanRequest = loanRequest; }
 
-    public String getCreditCheckStatus() {
-        return creditCheckStatus;
-    }
+    public Double getRiskScore() { return riskScore; }
 
-    // setters (FIX)
-    public void setLoanRequestId(Long loanRequestId) {
-        this.loanRequestId = loanRequestId;
-    }
+    public void setRiskScore(Double riskScore) { this.riskScore = riskScore; }
 
-    public void setDtiRatio(double dtiRatio) {
-        this.dtiRatio = dtiRatio;
-    }
+    public Double getDtiRatio() { return dtiRatio; }
 
-    public void setCreditCheckStatus(String creditCheckStatus) {
-        this.creditCheckStatus = creditCheckStatus;
-    }
+    public void setDtiRatio(Double dtiRatio) { this.dtiRatio = dtiRatio; }
 }

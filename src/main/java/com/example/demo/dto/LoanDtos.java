@@ -1,41 +1,13 @@
 package com.example.demo.dto;
 
-import java.time.LocalDateTime;
-
 public class LoanDtos {
 
-    private LoanDtos() {
-        // utility class
-    }
-
-    // ---------- LoanRequestDto ----------
+    // DTO for loan submission
     public static class LoanRequestDto {
-
-        private Long id;
-        private Long userId;
         private Double requestedAmount;
         private Integer tenureMonths;
-        private String purpose;
-        private String status;
-        private LocalDateTime appliedAt;
 
         public LoanRequestDto() {
-        }
-
-        public Long getId() {
-            return id;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public Long getUserId() {
-            return userId;
-        }
-
-        public void setUserId(Long userId) {
-            this.userId = userId;
         }
 
         public Double getRequestedAmount() {
@@ -53,109 +25,45 @@ public class LoanDtos {
         public void setTenureMonths(Integer tenureMonths) {
             this.tenureMonths = tenureMonths;
         }
-
-        public String getPurpose() {
-            return purpose;
-        }
-
-        public void setPurpose(String purpose) {
-            this.purpose = purpose;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public LocalDateTime getAppliedAt() {
-            return appliedAt;
-        }
-
-        public void setAppliedAt(LocalDateTime appliedAt) {
-            this.appliedAt = appliedAt;
-        }
     }
 
-    // ---------- FinancialProfileDto ----------
-    public static class FinancialProfileDto {
+    // DTO for eligibility response
+    public static class EligibilityResponseDto {
+        private Boolean eligible;
+        private Double maxEligibleAmount;
+        private Double estimatedEmi;
+        private String riskLevel;
 
-        private Long id;
-        private Long userId;
-        private Double monthlyIncome;
-        private Double monthlyExpenses;
-        private Double existingLoanEmi;
-        private Integer creditScore;
-        private Double savingsBalance;
-        private LocalDateTime lastUpdatedAt;
-
-        public FinancialProfileDto() {
+        public Boolean getEligible() {
+            return eligible;
         }
 
-        public Long getId() {
-            return id;
+        public void setEligible(Boolean eligible) {
+            this.eligible = eligible;
         }
 
-        public void setId(Long id) {
-            this.id = id;
+        public Double getMaxEligibleAmount() {
+            return maxEligibleAmount;
         }
 
-        public Long getUserId() {
-            return userId;
+        public void setMaxEligibleAmount(Double maxEligibleAmount) {
+            this.maxEligibleAmount = maxEligibleAmount;
         }
 
-        public void setUserId(Long userId) {
-            this.userId = userId;
+        public Double getEstimatedEmi() {
+            return estimatedEmi;
         }
 
-        public Double getMonthlyIncome() {
-            return monthlyIncome;
+        public void setEstimatedEmi(Double estimatedEmi) {
+            this.estimatedEmi = estimatedEmi;
         }
 
-        public void setMonthlyIncome(Double monthlyIncome) {
-            this.monthlyIncome = monthlyIncome;
+        public String getRiskLevel() {
+            return riskLevel;
         }
 
-        public Double getMonthlyExpenses() {
-            return monthlyExpenses;
-        }
-
-        public void setMonthlyExpenses(Double monthlyExpenses) {
-            this.monthlyExpenses = monthlyExpenses;
-        }
-
-        public Double getExistingLoanEmi() {
-            return existingLoanEmi;
-        }
-
-        public void setExistingLoanEmi(Double existingLoanEmi) {
-            this.existingLoanEmi = existingLoanEmi;
-        }
-
-        public Integer getCreditScore() {
-            return creditScore;
-        }
-
-        public void setCreditScore(Integer creditScore) {
-            this.creditScore = creditScore;
-        }
-
-        public Double getSavingsBalance() {
-            return savingsBalance;
-        }
-
-        public void setSavingsBalance(Double savingsBalance) {
-            this.savingsBalance = savingsBalance;
-        }
-
-        public LocalDateTime getLastUpdatedAt() {
-            return lastUpdatedAt;
-        }
-
-        public void setLastUpdatedAt(LocalDateTime lastUpdatedAt) {
-            this.lastUpdatedAt = lastUpdatedAt;
+        public void setRiskLevel(String riskLevel) {
+            this.riskLevel = riskLevel;
         }
     }
 }

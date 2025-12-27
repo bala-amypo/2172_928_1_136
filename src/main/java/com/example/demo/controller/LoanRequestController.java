@@ -11,25 +11,27 @@ import java.util.List;
 @RequestMapping("/loan-requests")
 public class LoanRequestController {
 
-    private final LoanRequestService service;
+    private final LoanRequestService loanRequestService;
 
-    public LoanRequestController(LoanRequestService service) {
-        this.service = service;
+    public LoanRequestController(LoanRequestService loanRequestService) {
+        this.loanRequestService = loanRequestService;
     }
 
     @PostMapping
-    public ResponseEntity<LoanRequest> create(
-            @RequestBody LoanRequest request) {
-        return ResponseEntity.ok(service.create(request));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<LoanRequest>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public ResponseEntity<LoanRequest> submit(@RequestBody LoanRequest request) {
+        LoanRequest saved = loanRequestService.submitRequest(request);
+        return ResponseEntity.ok(saved);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<LoanRequest> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getById(id));
+        LoanRequest lr = loanRequestService.getById(id);
+        return ResponseEntity.ok(lr);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<LoanRequest>> getByUser(@PathVariable Long userId) {
+        List<LoanRequest> list = loanRequestService.getRequestsByUser(userId);
+        return ResponseEntity.ok(list);
     }
 }
